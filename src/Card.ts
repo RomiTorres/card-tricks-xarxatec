@@ -21,19 +21,15 @@ export class Card {
     return this.#isFaceUp;
   }
 
-  set isFaceUp(newState: boolean) {
-    this.#isFaceUp = newState;
-  }
 
   toggleFace(): void {
-    if(this.#isFaceUp) this.#isFaceUp = false ;
-        else this.#isFaceUp = true; 
+   this.#isFaceUp = !this.#isFaceUp;
   }
 
   setCardImage(id:string) {
     const card = document.getElementById(id);
     let imagePath = "../public/img/back.png";
-    if(this.#isFaceUp) imagePath = "../public/img/AS.png"
+    if(this.#isFaceUp) imagePath = `../public/img/${this.#rank}${this.#suit[0].toUpperCase()}.png`;
     card.setAttribute("src", imagePath);
   }
 
