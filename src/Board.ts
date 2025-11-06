@@ -14,10 +14,6 @@ export class Board {
       deckCopy.splice(randomNumberCard, 1);
     }
     
-    
-    deck.forEach((card) => {
-
-    })
   }
 
   get visibleCards():Map<number, Card> {
