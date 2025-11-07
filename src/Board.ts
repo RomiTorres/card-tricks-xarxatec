@@ -20,11 +20,26 @@ export class Board {
     return this.#visibleCards;
   }
 
+  generateVisibleCardsHTML() {
+    const visibleCards = document.getElementById("visible-cards");
+    for(let i = 1; i <= this.#numberOfVisbleCards; i++) {
+      const paragraph = document.createElement("p");
+      const img = document.createElement("img");
+      img.setAttribute("src", "../public/img/back.png");
+      img.setAttribute("alt", "reverso de carta de poker");
+      img.classList.add("deck-card");
+      img.id = `card-${i}`;
+      paragraph.appendChild(img);
+      visibleCards.insertAdjacentElement("beforeend", paragraph);
+    }
+  }
+
   renderBoard() {
+    this.generateVisibleCardsHTML();
     const boardCards = document.getElementsByClassName("deck-card");
-    for(let i = 0; i < boardCards.length; i++) {
-      if( this.#visibleCards.get(i+1) instanceof Card){
-        this.#visibleCards.get(i+1).setCardImage(`card-${i+1}`);
+    for(let i = 1; i <= boardCards.length; i++) {
+      if( this.#visibleCards.get(i) instanceof Card){
+          this.#visibleCards.get(i).setCardImage(`card-${i}`);
       } 
     }
   }
