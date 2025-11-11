@@ -14,6 +14,7 @@ const card4 = new Card("9", "diamonds");
 const deck = [card1, card2, card3, card4];
 const board = new Board(deck, 4);
 board.renderBoard();
+const selectedCard: HTMLElement = document.getElementById('selected-card')
 
 const visibleCards: HTMLCollection =  document.getElementsByClassName("deck-card");
 let key: number;
@@ -28,7 +29,57 @@ for(let i = 0; i < visibleCards.length; i++) {
     }
     
   })
+  visibleCards[i].addEventListener('dragstart', (e: DragEvent) => {
+    if(e.target instanceof HTMLElement) {
+      e.dataTransfer.setData('text/plain',e.target.id);
+      e.dataTransfer.effectAllowed = 'move';
+      e.target.classList.add('dragging');
+      e.target.setAttribute('aria-grabbed', 'true') ;
+    }
+  });
+
+  visibleCards[i].addEventListener('dragend', (e:DragEvent) => {
+     if(e.target instanceof HTMLElement) {
+    e.target.classList.remove('dragging');
+    e.target.setAttribute('aria-grabbed', 'false');
+     }
+  })
+
 }
+
+selectedCard.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  selectedCard.classList.replace('selected-cards', 'over');
+})
+
+selectedCard.addEventListener('dragleave', () => {
+  selectedCard.classList.replace('over', 'selected-cards');
+})
+
+
+selectedCard.addEventListener('drop', (e) => {
+  e.preventDefault();
+  selectedCard.classList.remove('over');
+
+  const id = e.dataTransfer.getData('text/plain');
+  const dragged = document.getElementById(id);
+
+  if(!dragged) return ;
+
+  selectedCard.innerHTML = '';
+  selectedCard.appendChild(dragged);
+
+  
+
+})
+
+
+
+
+
+
+
 
 // document.getElementById("card-1").addEventListener("click", (e) => {
 //   if( board.visibleCards.get(1) instanceof Card) {

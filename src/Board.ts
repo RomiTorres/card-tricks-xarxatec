@@ -28,6 +28,8 @@ export class Board {
       img.setAttribute("src", "../public/img/back.png");
       img.setAttribute("alt", "reverso de carta de poker");
       img.classList.add("deck-card");
+      img.setAttribute("draggable", "true");
+      img.setAttribute("aria-grabbed", "false");
       img.id = `card-${i}`;
       paragraph.appendChild(img);
       visibleCards.insertAdjacentElement("beforeend", paragraph);
